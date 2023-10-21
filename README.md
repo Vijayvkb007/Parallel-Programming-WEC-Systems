@@ -8,5 +8,9 @@ API used :
 2. MPI
 
 To compile the programs writen using these api use:
-1. gcc -fopenmp X.c (OpenMP) then ./a.out
-2. mpicc X.c (MPI) mpirun a.out
+1. OpenMP
+    gcc -fopenmp X.c
+    ./a.out
+2. MPI
+    mpicc X.c 
+    mpirun a.out
