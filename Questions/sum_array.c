@@ -20,11 +20,11 @@ int main(){
     starttime = omp_get_wtime();
     int j,k,l;
     int num;
-    omp_set_num_threads(4);
+    omp_set_num_threads(16);
     #pragma omp parallel private(i,j,k,l) 
     {
     num = omp_get_num_threads(); 
-    #pragma omp for reduction(+ : sum) schedule(auto)
+    #pragma omp for reduction(+ : sum) schedule(auto) nowait
     for(i = 0; i < MAX; i++){
         for(j = 0 ; j< MAX; j++)
             for(k = 0 ; k< MAX; k++)
