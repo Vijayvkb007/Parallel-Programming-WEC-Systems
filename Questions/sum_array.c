@@ -19,16 +19,21 @@ int main(){
 
     starttime = omp_get_wtime();
     int j,k,l;
-    #pragma omp parallel for reduction(+ : sum) num_threads(8) private(i,j,k,l) schedule(auto)
-        for(i = 0; i < MAX; i++){
-            for(j = 0 ; j< MAX; j++)
-                for(k = 0 ; k< MAX; k++)
-                    for(l = 0 ; l < MAX; l ++)
-                        sum += (long)A[i];
-        }
+    int num;
+    omp_set_num_threads(4);
+    #pragma omp parallel private(i,j,k,l) 
+    {
+    num = omp_get_num_threads(); 
+    #pragma omp for reduction(+ : sum) schedule(auto)
+    for(i = 0; i < MAX; i++){
+        for(j = 0 ; j< MAX; j++)
+            for(k = 0 ; k< MAX; k++)
+                for(l = 0 ; l < MAX; l ++)
+                    sum += (long)A[i];
+        }}
 
     runtime = omp_get_wtime();
-    printf("sum == %ld calculated in %lf time", sum, runtime-starttime);
+    printf("sum == %ld calculated in %lf time with threads == %d", sum, runtime-starttime,num);
 
     free(A);
 }
