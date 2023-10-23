@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <omp.h>
 #include <stdlib.h>
-#include <time.h>
-#define MAX 1000000
+#define MAX 70
 
 int main(){
     
@@ -10,22 +9,25 @@ int main(){
     double timeused;
     int * A;
     A = (int *)malloc(sizeof(int) * MAX);
-    int i, sum = 0;
-    // #pragma omp parallel for
+    int i;
+    long int sum = 0;
     for(i = 0 ; i < MAX ; i ++){
         A[i] = i ;
     }
 
     startime = omp_get_wtime();
-    // #pragma omp parallel for reduction(+ : sum)
+
+    int j,k,l;
         for(i = 0; i < MAX; i++){
-            sum += A[i];
+            for(j = 0 ; j< MAX; j++)
+                for(k = 0 ; k< MAX; k++)
+                    for(l = 0 ; l < MAX; l ++)
+                        sum += (long)A[i];
         }
     endtime = omp_get_wtime();
 
-    // timeused = ((double)endtime-startime/ CLOCKS_PER_SEC);
     timeused = endtime - startime;
-    printf("sum == %d calculated in %lf time", sum, timeused);
+    printf("sum == %ld calculated in %lf time", sum, timeused);
 
     free(A);
 }
