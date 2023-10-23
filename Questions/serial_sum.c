@@ -2,11 +2,11 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <time.h>
-#define MAX 10000
+#define MAX 1000000
 
 int main(){
     
-    clock_t endtime, startime;
+    double endtime, startime;
     double timeused;
     int * A;
     A = (int *)malloc(sizeof(int) * MAX);
@@ -16,14 +16,15 @@ int main(){
         A[i] = i ;
     }
 
-    startime = clock();
+    startime = omp_get_wtime();
     // #pragma omp parallel for reduction(+ : sum)
         for(i = 0; i < MAX; i++){
             sum += A[i];
         }
-    endtime = clock();
+    endtime = omp_get_wtime();
 
-    timeused = (double)(endtime-startime)/ CLOCKS_PER_SEC;
+    // timeused = ((double)endtime-startime/ CLOCKS_PER_SEC);
+    timeused = endtime - startime;
     printf("sum == %d calculated in %lf time", sum, timeused);
 
     free(A);
