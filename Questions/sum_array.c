@@ -24,12 +24,12 @@ int main(){
     #pragma omp parallel private(i,j,k,l) 
     {
     num = omp_get_num_threads(); 
-    #pragma omp for reduction(+ : sum) schedule(auto) nowait
+    #pragma omp for reduction(+ : sum) schedule(auto)
     for(i = 0; i < MAX; i++){
         for(j = 0 ; j< MAX; j++)
             for(k = 0 ; k< MAX; k++)
                 for(l = 0 ; l < MAX; l ++)
-                    sum += (long)A[i];
+                    sum += (long)A[k];
         }}
 
     runtime = omp_get_wtime();
